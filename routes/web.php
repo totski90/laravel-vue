@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome', compact('tasks'));
 });
 
-Route::get('/vue', 'VueController@video_one');
+Route::get('/vue', 'VueController@show');
 
 Route::get('/skills', function() {
 

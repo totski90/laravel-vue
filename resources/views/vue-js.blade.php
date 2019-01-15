@@ -175,6 +175,33 @@
             
             
         </div>
+
+        <br>
+
+        <div id="one" class="container">
+
+            <h1>This is data one name: @{{ shared.user.name }}</h1>
+
+            
+        </div>
+
+        <div id="two" class="container">
+
+            <h1>This is data two name: @{{ shared.user.name }}</h1>
+            
+        </div>
+
+        <div id="app" class="container">
+            
+            <h1>Custom input components</h1>
+
+            <!-- <input type="text" v-model="coupon"> -->
+
+            <!-- <input type="text" :value="coupon" @input="coupon = $event.target.value"> -->
+
+            <coupon v-model="coupon">
+
+        </div>
         
 
         <script src="/js/vue2.1.3.js"></script>
