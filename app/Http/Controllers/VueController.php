@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class VueController extends Controller
 {
-    public function video_one()
+    public function show()
     {    	
     	
     	return view('vue-js');
