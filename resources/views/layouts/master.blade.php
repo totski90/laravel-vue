@@ -10,6 +10,8 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css">
+
         <title>My App</title>
 
 
@@ -19,15 +21,17 @@
         
         <div id="app">
 
+            @include('layouts.header')
 
-            <router-link to="/">Home</router-link>
+            <section class="section">
+                
+                <div class="container">
+                    
+                    <router-view></router-view>            
 
-            <router-link to="/about">About</router-link>
+                </div>
 
-
-
-            <router-view></router-view>
-            
+            </section>       
 
         </div>
 

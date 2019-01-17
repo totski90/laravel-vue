@@ -8,7 +8,7 @@
 
                 <div class="panel panel-default">
 
-                    <div class="panel-heading">About Page</div>
+                    <div class="panel-heading">Contact Page</div>
 
 
                     <div class="panel-body">
