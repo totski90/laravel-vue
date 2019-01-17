@@ -2,20 +2,30 @@
     
     <div class="container">
         
-        <div class="row">
+        <div class="colums">
     
-            <div class="col-md-8 col-md-offset-2">
+            <div class="colum">
 
-                <div class="panel panel-default">
+                <div class="message" v-for="status in statuses">
 
-                    <div class="panel-heading">Home Page</div>
-
-
-                    <div class="panel-body">
+                    <div class="message-header">
                         
-                        I'm an example component!
+                        <p>
+                            
+                            @{{ status.user.name }}
+
+                        </p>
+
+                        <p>
+                            
+                            A moment ago...
+
+                        </p>
 
                     </div>
+
+
+                    <div class="message-body" v-text="status.body"></div>
                     
                 </div>                   
 
@@ -27,3 +37,29 @@
     </div>
 
 </template>
+
+<script>
+    
+    export default {
+
+        data() {
+
+            return {
+
+                statuses: []
+
+            }
+
+        },
+
+        created() {
+
+            axios.get('/statuses')
+
+                .then(response => this.statuses = response.data);
+
+        }        
+
+    }
+
+</script>
