@@ -36,3 +36,9 @@ Route::post('store', 'TaskController@create');
 Route::resource('/cruds', 'CrudController', [
   'except' => ['edit', 'show', 'store']
 ]);
+
+Route::get('/statuses', function() {
+
+	return App\Status::with('user')->latest()->get();
+
+});
