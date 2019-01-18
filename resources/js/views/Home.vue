@@ -12,13 +12,13 @@
                         
                         <p>
                             
-                            @{{ status.user.name }}
+                            {{ status.user.name }}
 
                         </p>
 
                         <p>
                             
-                            A moment ago...
+                            {{ postedOn(status) }}
 
                         </p>
 
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+
+    import moment from 'moment';
     
     export default {
 
@@ -57,6 +59,16 @@
             axios.get('/statuses')
 
                 .then(response => this.statuses = response.data);
+
+        },
+
+        methods: {
+
+            postedOn(status) {
+
+                return moment(status.created).fromNow();
+
+            }
 
         }        
 
