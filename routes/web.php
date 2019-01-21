@@ -37,8 +37,6 @@ Route::resource('/cruds', 'CrudController', [
   'except' => ['edit', 'show', 'store']
 ]);
 
-Route::get('/statuses', function() {
+Route::get('/statuses', 'StatusesController@index');
 
-	return App\Status::with('user')->latest()->get();
-
-});
+Route::post('/statuses', 'StatusesController@store');
