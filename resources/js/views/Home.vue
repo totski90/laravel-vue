@@ -20,12 +20,15 @@
                             
                             {{ status.created_at | ago | capitalize }}
 
-                        </p>
+                        </p>                        
 
                     </div>
 
 
                     <div class="message-body" v-text="status.body"></div>
+
+                    <a @click="deleteStatus(status.id)" class="button is-danger is-fullwidth">Delete</a>
+                    <a @click="editStatus(status)" class="button is-primary is-fullwidth">Edit</a>
                     
                 </div>
 
@@ -60,7 +63,14 @@
 
             return {
 
-                statuses: []
+                statuses: [],
+
+                form: new Form(),
+
+                status: {
+                    id: '',
+                    body: ''
+                }
 
             }
 
@@ -99,6 +109,22 @@
                 alert('Your status has been added to the stream.');
 
                 window.scrollTo(0, 0);
+
+            },
+
+            deleteStatus(id) {
+
+                this.form.delete(`/statuses/${id}`).then(status => alert('Your status has been successfully deleted.'));
+
+                Status.all(statuses => this.statuses = statuses);
+
+            },
+
+            editStatus(status) {
+
+                this.status.id = status.id;
+
+                this.status.body = status.body;                
 
             }
 

@@ -89,8 +89,12 @@ class StatusesController extends Controller
      * @param  \App\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Status $status)
+    public function destroy($id)
     {
-        //
+        $status = Status::findOrFail($id);
+
+        if ($status->delete()) {
+            return Status::with('user')->latest()->get();
+        }
     }
 }
