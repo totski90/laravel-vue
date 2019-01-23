@@ -20,17 +20,49 @@
                             
                             {{ status.created_at | ago | capitalize }}
 
-                        </p>                        
+                        </p>                    
 
-                    </div>
-
+                    </div>   
 
                     <div class="message-body" v-text="status.body"></div>
 
-                    <a @click="deleteStatus(status.id)" class="button is-danger is-fullwidth">Delete</a>
-                    <a @click="editStatus(status)" class="button is-primary is-fullwidth">Edit</a>
+                    <div class="is-grouped">
+                        <a @click="deleteStatus(status.id)" class="button is-danger is-fullwidth">Delete</a>
+                        <a @click="editStatus(status)" class="button is-primary is-fullwidth">Edit</a>
+                    </div>
                     
                 </div>
+
+            <form @submit.prevent="updateStatus" @keydown="form.errors.clear()">
+                <textarea v-if="showEditor" class="textarea" placeholder="Just another textarea..." v-model="form.body"></textarea>
+                
+
+                <span class="help is-danger"
+
+                        v-if="form.errors.has('body')"
+
+                        v-text="form.errors.get('body')">
+                            
+                        </span>
+
+                <div class="is-grouped" v-if="showEditor" style="margin-top: 5px">
+                    <!-- <a @click="updateStatus(status.id)" class="button is-success">
+                        <span class="icon is-small">
+                          <i class="fa fa-check"></i>
+                        </span>
+                        <span>Save</span>
+                    </a> -->
+                    <button class="button is-primary" :disabled="form.errors.any()">Save</button>
+
+                     <a @click="editCancel" class="button is-danger is-outlined">
+                        <span>Cancel</span>
+                        <span class="icon is-small">
+                          <i class="fa fa-times"></i>
+                        </span>
+                    </a>
+                </div>
+                <br>
+            </form>
 
                 <!-- add to stream form -->
 
@@ -65,12 +97,13 @@
 
                 statuses: [],
 
-                form: new Form(),
+                form: new Form({ body: '', id: ''}),
 
                 status: {
                     id: '',
-                    body: ''
-                }
+                    body: ''                    
+                },
+                showEditor: false
 
             }
 
@@ -118,14 +151,38 @@
 
                 Status.all(statuses => this.statuses = statuses);
 
+            }, 
+
+            updateStatus() {
+                this.form.put('/statuses').then(status => alert('Your status has been successfully updated.'));
+
+                Status.all(statuses => this.statuses = statuses);
+            },
+
+            onSubmit(id) {
+
+                this.form
+                    
+                    .patch(`/statuses/${id}`)
+
+                    .then(status => this.$emit('completed', status));
+
             },
 
             editStatus(status) {
 
-                this.status.id = status.id;
+                this.form.body = status.body;
 
-                this.status.body = status.body;                
+                this.form.id = status.id;
 
+                // this.status_id = status.id;        
+
+                this.showEditor = true;          
+
+            },
+
+            editCancel() {
+                this.showEditor = false;
             }
 
         }

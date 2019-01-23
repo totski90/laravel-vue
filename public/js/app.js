@@ -1899,6 +1899,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1908,7 +1943,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      statuses: []
+      statuses: [],
+      form: new Form({
+        body: '',
+        id: ''
+      }),
+      status: {
+        id: '',
+        body: ''
+      },
+      showEditor: false
     };
   },
   filters: {
@@ -1931,6 +1975,42 @@ __webpack_require__.r(__webpack_exports__);
       this.statuses.unshift(status);
       alert('Your status has been added to the stream.');
       window.scrollTo(0, 0);
+    },
+    deleteStatus: function deleteStatus(id) {
+      var _this2 = this;
+
+      this.form.delete("/statuses/".concat(id)).then(function (status) {
+        return alert('Your status has been successfully deleted.');
+      });
+      _models_Status__WEBPACK_IMPORTED_MODULE_1__["default"].all(function (statuses) {
+        return _this2.statuses = statuses;
+      });
+    },
+    updateStatus: function updateStatus() {
+      var _this3 = this;
+
+      this.form.put('/statuses').then(function (status) {
+        return alert('Your status has been successfully updated.');
+      });
+      _models_Status__WEBPACK_IMPORTED_MODULE_1__["default"].all(function (statuses) {
+        return _this3.statuses = statuses;
+      });
+    },
+    onSubmit: function onSubmit(id) {
+      var _this4 = this;
+
+      this.form.patch("/statuses/".concat(id)).then(function (status) {
+        return _this4.$emit('completed', status);
+      });
+    },
+    editStatus: function editStatus(status) {
+      this.form.body = status.body;
+      this.form.id = status.id; // this.status_id = status.id;        
+
+      this.showEditor = true;
+    },
+    editCancel: function editCancel() {
+      this.showEditor = false;
     }
   }
 });
@@ -19932,9 +20012,117 @@ var render = function() {
               _c("div", {
                 staticClass: "message-body",
                 domProps: { textContent: _vm._s(status.body) }
-              })
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "is-grouped" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "button is-danger is-fullwidth",
+                    on: {
+                      click: function($event) {
+                        _vm.deleteStatus(status.id)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "button is-primary is-fullwidth",
+                    on: {
+                      click: function($event) {
+                        _vm.editStatus(status)
+                      }
+                    }
+                  },
+                  [_vm._v("Edit")]
+                )
+              ])
             ])
           }),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.updateStatus($event)
+                },
+                keydown: function($event) {
+                  _vm.form.errors.clear()
+                }
+              }
+            },
+            [
+              _vm.showEditor
+                ? _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.body,
+                        expression: "form.body"
+                      }
+                    ],
+                    staticClass: "textarea",
+                    attrs: { placeholder: "Just another textarea..." },
+                    domProps: { value: _vm.form.body },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "body", $event.target.value)
+                      }
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.form.errors.has("body")
+                ? _c("span", {
+                    staticClass: "help is-danger",
+                    domProps: {
+                      textContent: _vm._s(_vm.form.errors.get("body"))
+                    }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.showEditor
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "is-grouped",
+                      staticStyle: { "margin-top": "5px" }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button is-primary",
+                          attrs: { disabled: _vm.form.errors.any() }
+                        },
+                        [_vm._v("Save")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "button is-danger is-outlined",
+                          on: { click: _vm.editCancel }
+                        },
+                        [_c("span", [_vm._v("Cancel")]), _vm._v(" "), _vm._m(0)]
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("br")
+            ]
+          ),
           _vm._v(" "),
           _c("add-to-stream", { on: { completed: _vm.addStatus } })
         ],
@@ -19943,7 +20131,16 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon is-small" }, [
+      _c("i", { staticClass: "fa fa-times" })
+    ])
+  }
+]
 render._withStripped = true
 
 

@@ -36,8 +36,19 @@ class StatusesController extends Controller
      */
     public function store(Request $request)
     {
-     
         $this->validate($request, ['body' => 'required']);
+        
+        if ($request->isMethod('put')) {
+            
+            $status = Status::findOrFail($request->id);
+
+            $status->body = $request->body;
+
+            $status->save();
+
+            return Status::with('user')->latest()->get();
+        }
+        else {
 
             $status = User::find(1)
                 
@@ -47,6 +58,7 @@ class StatusesController extends Controller
 
 
                 return $status->load('user');
+            }
     }
 
     /**
@@ -78,9 +90,14 @@ class StatusesController extends Controller
      * @param  \App\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Status $status)
+    public function update($id)
     {
-        //
+        // $this->validate($request, ['body' => 'required']);
+
+        //     $status = User::find(1)->statuses()->save($request->only(['body']));
+
+        //         return $status->load('user');
+        dd(request());
     }
 
     /**
