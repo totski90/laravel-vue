@@ -42,3 +42,5 @@ Route::get('/statuses', 'StatusesController@index');
 Route::post('/statuses', 'StatusesController@store');
 
 Route::delete('/statuses/{id}', 'StatusesController@destroy');
+
+Route::put('/statuses', 'StatusesController@store');
