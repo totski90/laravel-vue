@@ -172,6 +172,19 @@
 
                 
             </form>
+
+                
+
+            <form action="/projects" @submit.prevent="onUpdate">
+                
+                <div class="control">
+                    <br>
+                    <button class="button is-primary" :disabled="form.errors.any()">Update</button>                    
+                    <a @click.prevent="onDelete" class="button is-danger" :disabled="form.errors.any()" href="{{url('/projects')}}">Delete</a>
+                    
+                </div>
+
+            </form>
             
             
         </div>

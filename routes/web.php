@@ -27,6 +27,10 @@ Route::get('/skills', function() {
 
 Route::post('/projects', 'ProjectsController@store');
 
+Route::put('/projects', 'ProjectsController@create');
+
+Route::delete('/projects', 'ProjectsController@destroy');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

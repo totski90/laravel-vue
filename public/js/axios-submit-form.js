@@ -22,7 +22,19 @@ $.getScript('./js/helper/utilities.js', function() {
 
 			onSubmit() {			
 
-				this.form.submit('post', '/projects');	
+				this.form.submit('post', '/projects');
+
+			},
+
+			onUpdate() {
+
+				this.form.submit('put', '/projects');
+
+			},
+
+			onDelete() {
+
+				this.form.submit('delete', '/projects');
 
 			}
 

@@ -11,7 +11,7 @@ class ProjectsController extends Controller
     public function create()
     {
 
-
+        return ['message' => 'put request submitted!'];
 
     }
 
@@ -36,5 +36,10 @@ class ProjectsController extends Controller
 
     	return ['message' => 'Project created!'];
 
+    }
+
+    public function destroy()
+    {
+        return ['message' => 'delete request submitted!'];
     }
 }
