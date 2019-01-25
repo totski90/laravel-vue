@@ -1,121 +1,36 @@
 
-class Errors {
+$.getScript('./js/helper/utilities.js', function() {
 
-	constructor() {
+	 // ===================OBJECT ORIENTED FORM=========================
 
-		this.errors = {};
+	new Vue({
 
-	}
+		el: '#oriented-form',
 
-	get(field) {
+		data: {
 
-		if (this.errors[field]) {
+			form: new Form({
 
-			return this.errors[field][0];
+				name: '',
+
+				description: ''
+			})
+
+		},
+
+		methods: {
+
+			onSubmit() {			
+
+				this.form.submit('post', '/projects');	
+
+			}
 
 		}
-	}
 
-	record(errors) {
+	});
 
-		this.errors = errors;
-	}
-
-	clear(field) {
-
-		if(field) {
-
-			delete this.errors[field];
-
-			return;
-		}
-
-
-		this.errors = {};
-
-	}
-
-	has(field) {
-
-		return this.errors.hasOwnProperty(field);
-
-	}
-
-	any() {
-
-		return Object.keys(this.errors).length > 0;
-
-	}
-
-}
-
- class Form {
-
- 	constructor(data) {
-
- 		this.originalData = data;
-
- 		for (let field in data) {
-
-	 		this[field] = data[field];
-
-	 	}
-
-	 	this.errors = new Errors();
-
- 	}
-
- 	data() {
-
- 		let data = Object.assign({}, this);
-
- 		delete data.originalData;
-
- 		delete data.errors;
-
- 		return data;
-
- 	}
-
- 	reset() {
-
- 		for (let field in this.originalData) { 			
-
- 			this[field] = '';
-
- 		}
-
- 		this.errors.clear();
-
- 	}
-
- 	submit(requestType, url) {
-
- 		axios[requestType](url, this.data())				
-
-			.then(this.onSuccess.bind(this))
-
-			.catch(this.onFail.bind(this));
-
-
- 	}
-
- 	onSuccess(response) {
-
- 		alert(response.data.message); 		
-
- 		this.reset();
-
- 	}
-
- 	onFail(error) {
-
- 		this.errors.record(error.response.data.errors);
-
- 	}
- 	
-
- }
+});
 
 // ==========================CUSTOM INPUT COMPONENTS==============================
 Vue.component('coupon', {
@@ -209,40 +124,3 @@ Vue.component('coupon', {
  	}
 
  })
-
-// ===================OBJECT ORIENTED FORM=========================
-
-new Vue({
-
-	el: '#oriented-form',
-
-	data: {
-
-		form: new Form({
-
-			name: '',
-
-			description: ''
-		})
-
-	},
-
-	methods: {
-
-		onSubmit() {			
-
-			this.form.submit('post', '/projects');				
-
-		},
-
-		onSuccess(response) {
-
-			alert(response.data.message);
-
-			form.reset();
-
-		}
-
-	}
-
-});

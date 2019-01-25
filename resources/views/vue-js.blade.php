@@ -203,6 +203,7 @@
 
         </div>
         
+        <script src="/js/jquery.js"></script>
 
         <script src="/js/vue2.1.3.js"></script>
         <script type="text/javascript" src="/js/axios.js"></script>
