@@ -40,6 +40,8 @@
 
 					<button class="button is-primary" :disabled="form.errors.any()">Submit</button>
 
+					<a class="button is-primary" href="/vue">Uncompile version</a>
+
  
 				</p>
 

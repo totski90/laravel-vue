@@ -181,6 +181,8 @@
                     <br>
                     <button class="button is-primary" :disabled="form.errors.any()">Update</button>                    
                     <a @click.prevent="onDelete" class="button is-danger" :disabled="form.errors.any()" href="{{url('/projects')}}">Delete</a>
+
+                    <a class="button is-success" href="{{ url('/') }}">Compiled version</a>
                     
                 </div>
 
